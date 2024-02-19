@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./components/common/Footer/Footer";
+import Header from "./components/common/Header/Header";
+import Sidebar from "./components/common/Sidebar/Sidebar";
+import { AnimatePresence } from "framer-motion";
+
 
 function App() {
+  const location = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className=" relative">
+      <Header />
+      <div className=" flex">
+        <Sidebar />
+        <AnimatePresence  location={location} key={location?.pathname} >
+             <Outlet />
+        </AnimatePresence>
+      </div>
+
+      <Footer />
+      
     </div>
   );
 }

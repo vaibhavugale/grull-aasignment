@@ -2,16 +2,44 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Cart from './components/pages/Cart/Cart';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from './components/pages/Home/Home';
+import Category from './components/pages/Category/Category';
+import { ContextProvider } from './Context';
+import Toaster from "react-hot-toast"
 
+const router = createBrowserRouter([
+
+  {
+    path:"/",
+    element:<ContextProvider>
+      <App/>
+      <Toaster 
+        position="top-left"
+        containerStyle={{"z-index":100}}
+  reverseOrder={false} />
+    </ContextProvider>,
+    children:[
+        {
+          path:"/",
+          element:<Home />
+        },
+        {
+          path:"/cart",
+          element:<Cart />
+        },{
+          path:"/category/:catName",
+          element:<Category />
+        }
+    ]
+  }
+]
+
+)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
